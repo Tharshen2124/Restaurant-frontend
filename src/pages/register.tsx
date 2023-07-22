@@ -1,4 +1,7 @@
-export default function signup() {
+import axios from 'axios'
+import type { GetStaticProps, InferGetStaticPropsType } from 'next'
+
+export default function Register() {
     return (
         <>
           <div className="bg-gray-100">
