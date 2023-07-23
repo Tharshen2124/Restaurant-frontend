@@ -37,8 +37,8 @@ export default function Home({repo}: InferGetStaticPropsType<typeof getStaticPro
             <li><a className="hover:text-cyan-500 transition-colors" href="">Beverages</a></li>
           </ul>
           <div className="flex items-center gap-3">
-            <Link href="/user/login"  className="hover:text-cyan-500 transition-colors">Login</Link>
-            <Link href="/user/signup" className="hover:text-cyan-500 transition-colors">Sign Up</Link>
+            <Link href="/login"  className="hover:text-cyan-500 transition-colors">Login</Link>
+            <Link href="/register" className="hover:text-cyan-500 transition-colors">Sign Up</Link>
           </div>
         </div>
       </nav>
