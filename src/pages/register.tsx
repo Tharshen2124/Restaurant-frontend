@@ -10,8 +10,8 @@ export default function Register() {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const submitUser = async(e: any) => {
-      e.preventDefault(); //! what is this for
-     
+      e.preventDefault(); 
+      
       const response = await fetch('http://localhost/api/v1/register', {
         method: "POST",
         body: JSON.stringify({name: name, email: email, password: password}),
@@ -19,6 +19,7 @@ export default function Register() {
           'Content-Type': 'application/json'
         }
       })
+
       const data = await response.json()
       console.log(data);
     }
