@@ -1,33 +1,62 @@
-import Button from '@/components/atoms/Button'
-import LabelForms from '@/components/atoms/label'
-import { Title } from '@/components/atoms/registerTitle'
-import Link from 'next/link'
+import { GlobalContext } from '@/context';
+import { useRouter } from 'next/router';
+import { useContext, useState } from 'react';
 
-export default function login() {
-    return (
-      <>
-      <Link href="/">Back</Link>
-          <div className="container mx-auto py-8">
-            <form className="w-full max-w-sm mx-auto bg-white p-8 rounded-md shadow-md">
-                <Title name="Welcome Back!"/>
-                <div className="mb-4">
-                  <LabelForms htmlFor="email" name="Email"/>
-                  <input
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" 
-                    type="email" id="email" name="email" placeholder="john@example.com"
-                  />
-                </div>
-                <div className="mb-4">
-                  <LabelForms htmlFor="password" name="Password"/>
-                  <input
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" 
-                    type="password" id="password" name="password" placeholder="********"
-                  />
-                </div>
-                <Button type="submit" name="Login"/>
-            </form>
-          </div>
-      </>
-    )
-  }
+export default function Register() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState<any>(null);
+  const router = useRouter();
   
+  const { setToken, setUsername } = useContext(GlobalContext);
+
+  const submitUser = async(e: any) => {
+    
+    e.preventDefault();     
+    const response = await fetch('http://localhost/api/register', {
+      method: "POST",
+      body: JSON.stringify({ email: email, password: password }),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const data = await response.json()
+    console.log(data);
+    let getToken = data.token
+    
+    if (data.errors) {
+      setErrors(data.errors)
+    } else {
+      router.push('/')
+      setToken(getToken)
+      setUsername()
+    }
+  }
+
+  return (
+      <>
+          <form onSubmit={submitUser}>
+              <div className="mb-4">
+                  <label>Email:</label>
+                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                  {errors && errors.email && (
+                      <p>{errors.email.toString()}</p>
+                  )   
+                  }
+              </div>
+              <div className="mb-4">
+                  <label>Password: </label>
+                  <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                  {errors && errors.password && (
+                      <p>{errors.password.toString()}</p>
+                  )   
+                  }
+              </div>
+          <input className="bg-blue-400" type="submit"/>
+          </form>
+      </>
+  )
+}

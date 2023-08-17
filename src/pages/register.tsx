@@ -1,8 +1,6 @@
-import { useState } from 'react'
+import { GlobalContext } from '@/context';
 import { useRouter } from 'next/router';
-
-export let token:string
-
+import { useContext, useState } from 'react';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -10,11 +8,15 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<any>(null);
   const router = useRouter();
+  
+  const { setToken, setUsername } = useContext(GlobalContext);
 
   const submitUser = async(e: any) => {
-    e.preventDefault();     const response = await fetch('http://localhost/api/register', {
+    
+    e.preventDefault();     
+    const response = await fetch('http://localhost/api/register', {
       method: "POST",
-      body: JSON.stringify({name: name, email: email, password: password}),
+      body: JSON.stringify({name: name, email: email, password: password, }),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -23,16 +25,17 @@ export default function Register() {
 
     const data = await response.json()
 
-    token = data.token
-    console.log(token)
+    let getToken = data.token
+    let getUsername = data.user.name;
+
     console.log(data);
     if (data.errors) {
       setErrors(data.errors)
     } else {
       router.push('/')
+      setToken(getToken)
+      setUsername(getUsername)
     }
-
-
   }
 
   return (
@@ -41,7 +44,7 @@ export default function Register() {
               <div className="mb-4">
                   <label>Name:</label>
                   <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
-                  {errors && (
+                  {errors && errors.name && (
                       <p>{errors.name.toString()}</p>
                   )   
                   }
@@ -49,7 +52,7 @@ export default function Register() {
               <div className="mb-4">
                   <label>Email:</label>
                   <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                  {errors && (
+                  {errors && errors.email && (
                       <p>{errors.email.toString()}</p>
                   )   
                   }
@@ -57,7 +60,7 @@ export default function Register() {
               <div className="mb-4">
                   <label>Password: </label>
                   <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                  {errors && (
+                  {errors && errors.password && (
                       <p>{errors.password.toString()}</p>
                   )   
                   }
