@@ -1,6 +1,9 @@
+import Logout from "@/components/atoms/Logout"
 import Link from "next/link"
 
-export default function Navbar() {
+export default function Navbar({ token, setToken, setUsername }: any) {
+    console.log(token);
+    
     return (
         <nav className="shadow bg-white">
             <div className="h-16 mx-auto px-5 flex items-center justify-between">
@@ -10,10 +13,18 @@ export default function Navbar() {
                 <li><a className="hover:text-cyan-500 transition-colors" href="#drink">Drinks</a></li>
                 <li><a className="hover:text-cyan-500 transition-colors" href="">Beverages</a></li>
             </ul>
-            <div className="flex items-center gap-3">
-                <Link href="/login"  className="hover:text-cyan-500 transition-colors">Login</Link>
-                <Link href="/register" className="hover:text-cyan-500 transition-colors">Sign Up</Link>
-            </div>
+          
+            {!token ? (
+                    <div className="flex items-center gap-3">
+                        <Link href="/login"  className="hover:text-cyan-500 transition-colors">Login</Link>
+                        <Link href="/register" className="hover:text-cyan-500 transition-colors">Sign Up</Link>
+                    </div>
+                ) : (
+                    <div>
+                        <Logout token={token} setToken={setToken} setUsername={setUsername}/>
+                    </div>
+                )
+            }
             </div>
         </nav>
     )
