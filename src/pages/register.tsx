@@ -1,6 +1,6 @@
 import { GlobalContext } from '@/context';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -24,11 +24,9 @@ export default function Register() {
     })
 
     const data = await response.json()
-
     let getToken = data.token
     let getUsername = data.user.name;
 
-    console.log(data);
     if (data.errors) {
       setErrors(data.errors)
     } else {
