@@ -11,7 +11,7 @@ export default function Register() {
   
   const { setToken, setUsername } = useContext(GlobalContext);
 
-  const submitUser = async(e: any) => {
+    const submitUser = async(e: any) => {
     
     e.preventDefault();     
     const response = await fetch('http://localhost/api/v1/register', {

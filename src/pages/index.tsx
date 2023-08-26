@@ -37,7 +37,13 @@ export default function Home({repo}: InferGetStaticPropsType<typeof getStaticPro
           <div className="flex flex-wrap gap-5 justify-center">
           {repo.data.map((post: Menu) => (
             post.type === "food" && 
-            <Card key={post.id} menuItem={post.menu_item} price={post.price} id={post.id.toString()}/>
+            <Card 
+              key={post.id} 
+              menuItem={post.menu_item} 
+              price={post.price} 
+              id={post.id.toString()}
+              showOrderButton={true}
+            />
           ))}
           </div>
         </section>
@@ -46,7 +52,13 @@ export default function Home({repo}: InferGetStaticPropsType<typeof getStaticPro
           <div className="flex flex-wrap gap-5 justify-center">
           {repo.data.map((post: Menu, i: number, token: any) => (
             post.type === "drink" && 
-            <Card key={i} menuItem={post.menu_item} price={post.price} id={post.id.toString()}/>
+            <Card 
+              key={i} 
+              menuItem={post.menu_item} 
+              price={post.price} 
+              id={post.id.toString()}
+              showOrderButton={true}
+            />
           ))}
           </div>
         </section>
