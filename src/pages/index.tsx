@@ -42,22 +42,23 @@ export default function Home({repo}: InferGetStaticPropsType<typeof getStaticPro
               menuItem={post.menu_item} 
               price={post.price} 
               id={post.id.toString()}
-              showOrderButton={true}
+              showOrderButton={token ? true : false}
             />
           ))}
+          {console.log(token + "fisdfhsdof")}
           </div>
         </section>
         <section id="drink" className="mt-10">
           <h1 className="text-3xl bg-white mx-auto text-center w-48 py-2 rounded-lg shadow-md mb-4 font-semibold">Drinks</h1>
           <div className="flex flex-wrap gap-5 justify-center">
-          {repo.data.map((post: Menu, i: number, token: any) => (
+          {repo.data.map((post: Menu) => (
             post.type === "drink" && 
             <Card 
-              key={i} 
+              key={post.id} 
               menuItem={post.menu_item} 
               price={post.price} 
               id={post.id.toString()}
-              showOrderButton={true}
+              showOrderButton={token ? true : false}
             />
           ))}
           </div>
