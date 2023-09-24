@@ -39,9 +39,17 @@ export default function Register() {
   return (
       <>
         <form onSubmit={submitUser}>
+          <div className="bg-white w-96 px-5 py-7">
             <div className="mb-4">
                 <label>Name:</label>
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
+                <p>
+                  <input 
+                    type="text" 
+                    value={name} 
+                    onChange={(e) => setName(e.target.value)}
+                    className="outline-1 w-full py-1"
+                  />
+                </p>
                 {errors && errors.name && (
                     <p>{errors.name.toString()}</p>
                 )   
@@ -49,7 +57,13 @@ export default function Register() {
             </div>
             <div className="mb-4">
                 <label>Email:</label>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                <p>
+                  <input 
+                    type="email" 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </p>
                 {errors && errors.email && (
                     <p>{errors.email.toString()}</p>
                 )   
@@ -63,7 +77,12 @@ export default function Register() {
                 )   
                 }
             </div>
-        <input className="bg-blue-400" type="submit"/>
+            <input 
+              className="bg-blue-500 w-full rounded-md py-2 text-white" 
+              type="submit"
+            />
+          </div>
+        
         </form>
       </>      
   )

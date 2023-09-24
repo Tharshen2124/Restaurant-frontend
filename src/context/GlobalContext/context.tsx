@@ -16,7 +16,9 @@ export function GlobalProvider(props: any)
     useEffect(() => {
         const storedToken = sessionStorage.getItem('token');
         const storedUsername = sessionStorage.getItem('username');
+        
         if (storedToken && storedUsername) {
+            document.cookie = `token=${storedToken}`;
             setToken(storedToken);
             setUsername(storedUsername);
         }

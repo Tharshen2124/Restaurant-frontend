@@ -1,31 +1,27 @@
 import Navbar from '@/components/organisms/Navbar'
 import axios from 'axios'
-import type { GetStaticProps, InferGetStaticPropsType } from 'next'
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import { Menu } from '../types/menu'
 import Card from '@/components/organisms/Card'
 import { useContext } from 'react'
 import { GlobalContext } from '@/context'
 
-export const getStaticProps: GetStaticProps<{repo: any}> = async () => {
-  let url = 'http://localhost/api/v1/menu'
-  let repo;
-  
-  try {
-      const response = await axios.get(url);
-      repo = response.data;
-  } catch (err) {
-      console.log(err);
-  }
-
-  return { 
-    props: {
-      repo,
+export const getServerSideProps = (async (context) => {
+  const token = context.req.cookies;
+  const res = await fetch('http://localhost/api/v1/menu', {
+    method: "GET",
+    headers: {
+      Authorization:`Bearer ${token}`,
     }
-  }
-}
+  })
+  const repo = await res.json()
+  return { props: { repo } }
 
-export default function Home({repo}: InferGetStaticPropsType<typeof getStaticProps>) {
+}) satisfies GetServerSideProps<{
+  repo: Menu
+}>
 
+export default function Home({repo}: InferGetServerSidePropsType<typeof getServerSideProps>)  {
   const {token, username, setUsername, setToken} = useContext(GlobalContext)
 
   return (
