@@ -1,14 +1,14 @@
-import { useContext } from "react"
-import { GlobalContext } from "./context"
+import { useContext } from "react";
+import { GlobalContext } from "./context";
 
 export const useGlobalHook = () => {
-    const context = useContext(GlobalContext)
+  const context = useContext(GlobalContext);
 
-    if(!context) {
-        throw new Error('useGlobalHook must be used inside a GlobalProvider.')
-    }
+  if (!context) {
+    throw new Error("useGlobalHook must be used inside a GlobalProvider.");
+  }
 
-    return context
-}
+  return context;
+};
 
-export default useGlobalHook
+export default useGlobalHook;
